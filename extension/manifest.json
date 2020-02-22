@@ -1,0 +1,13 @@
+{
+	"manifest_version": 2,
+	"name": "BaitHate",
+	"version": "0.1",
+	"content_scripts": [
+		{
+			"matches": [
+				"*://www.youtube.com/*"
+			],
+			"js": ["content.js"]
+		}
+	]
+}
