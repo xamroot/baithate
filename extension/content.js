@@ -1,4 +1,4 @@
-console.log("hit");
+let titles = [];
 try {
 	window.onload = function() {
 		console.log("HIT");
@@ -7,10 +7,11 @@ try {
 		console.log("beginning");
 		console.log(titleElements.length);
 		for (let i=0; i<titleElements.length; ++i) {
-			console.log(titleElements[i]);	
+            console.log(titleElements[i].innerHTML);
+            titles.push(titleElements[i].innerHTML)	
 		}
 
-		console.log("ending");
+		console.log(titles);
 	}();
 }
 catch (e) {
