@@ -2,6 +2,17 @@
 	"manifest_version": 2,
 	"name": "BaitHate",
 	"version": "0.1",
+
+	"icons": {
+		"48": "icons/thisisbait.png"
+	  },
+
+	  "browser_action": {
+		"default_icon": {
+		  "48": "icons/thisisbait.png"
+		}
+	  },
+
 	"content_scripts": [
 		{
 			"matches": [
