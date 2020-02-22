@@ -55,6 +55,26 @@ namespace BaitHateAPI.Controllers
             return result;
         }
 
+        [HttpGet("GetAllFeedback")]
+        public ActionResult<List<Vote>> GetAllFeedback()
+        {
+            return _context.Votes.ToList();
+        }
+
+        [HttpPost("InsertTraining")]
+        public ActionResult InsertTraining([FromBody] TrainingData data)
+        {
+            if(_context.TrainingData.Where(d => data.Title == d.Title).ToList().Count > 0)
+            {
+                _context.Entry(data).State = EntityState.Modified;
+                _context.SaveChanges();
+                return Ok();
+            }
+            _context.TrainingData.Add(data);
+            _context.SaveChanges();
+            return Ok();
+        }
+
         [HttpPost("AddUserFeedback")]
         public ActionResult AddUserFeedback(string title, bool isGood)
         {
