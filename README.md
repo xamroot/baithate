@@ -22,7 +22,7 @@ We developed BaitHate to help identify clickbait at a glance and get back to cle
 5. Drag the 'baithate-master' folder anywhere on the page to import it (do not delete the folder afterwards).
 
 #### Chrome Web Store
-BaitHate has been published on the Chrome Web Store and is available here ##TODO. 
+Coming soon. BaitHait is currently under review to be published to the Chrome Web App Store. 
 
 ## Usage
 
