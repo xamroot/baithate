@@ -14,9 +14,10 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"*://www.youtube.com/*"
+				"*://www.youtube.com/*",
+				"*://www.google.com/search*"
 			],
-			"js": ["jquery.min.js", "content.js"]
+			"js": ["popper.js", "tippy.js", "jquery.min.js", "content.js"]
 		}
 	],
 		"web_accessible_resources": ["*.svg","*.SVG"],

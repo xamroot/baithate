@@ -88,7 +88,17 @@ function scrapePage(){
 		} else {
 			elementToAppend = YoutubeHomepage;
 		}
-	} 
+	} else if(location.includes("www.google.com/search?")){
+		if(location.includes("tbm=nws")){
+			titleElements = $("div.dbsr");
+			elementToAppend = GoogleNews;
+		}
+		else
+		{
+			titleElements = $("h3, .nDgy9d").not('[role="heading"]');
+			elementToAppend = GoogleSearch;
+		}
+	}
 
 	for (let i=0; i<titleElements.length; ++i) {
 		currentTitles.push(titleElements[i].innerText);
@@ -122,6 +132,7 @@ function updateDifferences(titleElements){
 					buttonElem.addEventListener("click", displayPopup);
 					buttonElem.setAttribute("result", "N/A");
 					buttonElem.setAttribute("id", "buttonElem" + i);
+					buttonElem.setAttribute("data-tippy-content", "Tooltips");
 					buttonElem.setAttribute("style", "border:1px,1px,1px;");
 					let val = parseInt(x[i] * 100)
 					percent.innerText = "  " + val + "%";
@@ -156,6 +167,14 @@ function YoutubeSearchpage (titleElement) {
 
 function YoutubeWatchPage(titleElement) {
 	return titleElement.parentElement.parentElement.parentElement.parentElement;
+}
+
+function GoogleSearch(titleElement){
+	return titleElement.parentElement.parentElement.parentElement;
+}
+
+function GoogleNews(titleElement){
+	return titleElement.parentElement;
 }
 
 function killAll(){
