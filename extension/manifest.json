@@ -3,14 +3,14 @@
 	"name": "BaitHate",
 	"version": "0.1",
 
-	"icons": {
-		"48": "icons/thisisbait.png"
-	  },
+	 "icons": {
+	 	"48": "popup/thisisbait.png"
+	   },
 
 	  "browser_action": {
-		"default_icon": {
-		  "48": "icons/thisisbait.png"
-		}
+		"default_icon": "popup/thisisbait.png",
+		"default_title": "BaitHate",
+		"default_popup": "popup/options.html"
 	  },
 
 	"content_scripts": [
