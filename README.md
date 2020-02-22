@@ -21,7 +21,14 @@ We developed BaitHate to help identify clickbait at a glance and get back to cle
 #### Chrome Web Store
 BaitHate has been published on the Chrome Web Store and is available here ##TODO. 
 
-### Supported Sites
+### Usage
+
+Once installed, BaitHate will automatically display an estimated likelihood that a title link on a supported site is clickbait, as well as a helpful color indicator. 
+
+To disable, click the BaitHate extension icon on the toolbar and toggle "enable BaitHate" to off and referesh the page.
+
+####  Supported Sites
+
 Currently, the extension needs to be configured for each individual site. It is our hope to develop a general form in the future. Below is a list of sites currently supported.
 
 1. Google [Search](https://www.google.com) / [News](https://news.google.com)
