@@ -192,7 +192,7 @@ function GoogleSearch(titleElement){
 }
 
 function GoogleNews(titleElement){
-	return titleElement.parentElement.parentElement.parentElement;
+	return titleElement.parentElement.parentElement.parentElement.parentElement;
 }
 
 function BuzzfeedHome(titleElement){
