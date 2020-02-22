@@ -15,7 +15,8 @@
 		{
 			"matches": [
 				"*://www.youtube.com/*",
-				"*://www.google.com/search*"
+				"*://www.google.com/search*",
+				"*://www.buzzfeed.com/*"
 			],
 			"js": ["popper.js", "tippy.js", "jquery.min.js", "content.js"]
 		}

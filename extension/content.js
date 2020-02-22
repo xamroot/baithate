@@ -78,6 +78,9 @@ function scrapePage(){
 			titleElements = $("h3, .nDgy9d").not('[role="heading"]');
 			elementToAppend = GoogleSearch;
 		}
+	} else if(location == "https://www.buzzfeed.com/"){
+		titleElements = $(".js-card__link.link-gray");
+		elementToAppend = BuzzfeedHome;
 	}
 
 	for (let i=0; i<titleElements.length; ++i) {
@@ -185,6 +188,10 @@ function GoogleSearch(titleElement){
 }
 
 function GoogleNews(titleElement){
+	return titleElement.parentElement.parentElement.parentElement;
+}
+
+function BuzzfeedHome(titleElement){
 	return titleElement.parentElement.parentElement.parentElement;
 }
 
