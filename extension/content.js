@@ -3,53 +3,9 @@ let currentTitles = [];
 let elementToAppend;
 let buttons = [];
 let targetUrl = "https://baithateapi.azurewebsites.net/api/BaitHate";
-let currentPopupParent = 0;
-let currentPopup = 0;
-let xhttp = new XMLHttpRequest();
-let canSetInterval = 0
 let readyToLoad = true;
 let loadedUrl = "";
 
-let displayPopup = (event) => {
-	// check to make sure no pop up is running yet
-	if (currentPopup) {
-		currentPopupParent.removeChild(currentPopup);
-		currentPopupParent = 0;
-		currentPopup = 0;
-		return;
-	}
-	// set up the current popup div
-	currentPopup = document.createElement("DIV");
-	color = "blue";
-	result = event.target.getAttribute("result")
-	
-	value = parseInt(result);
-	color = getColorGradient(value / 100);
-
-	currentPopup.setAttribute("style", "background-color:" + color + "; height:10vh; width:25vw; position:absolute; z-index:5000; right:10%; top: 25%; border: 1px solid black; border-radius: 3px;");
-	// set up pop message
-	let popupMessage = document.createElement("H3");
-	popupMessage.innerHTML = event.target.getAttribute("result");
-	if (event.target.getAttribute("result") != "N/A") {
-		popupMessage.innerHTML = event.target.getAttribute("result") + "% clickbait";
-	}
-	popupMessage.setAttribute("style", "position:relative; z-index:10000;")
-	currentPopup.appendChild(popupMessage);
-	// set up thumbs up
-	let popupThumbsup = document.createElement("a");
-	popupThumbsup.innerText = "👍";
-	popupThumbsup.setAttribute("style", "position:relative; z-index:10000; height:25px; width: 25px");
-	currentPopup.appendChild(popupThumbsup);
-	// set up thumbs down
-	let popupThumbsdown = document.createElement("a");
-	popupThumbsdown.innerText = "👎";
-	popupThumbsdown.setAttribute("style", "position:relative; z-index:10000; height:25px; width: 25px");
-	currentPopup.appendChild(popupThumbsdown);
-	// add current popup to the parent (what you are clicking on)
-	currentPopupParent = event.target;
-	currentPopupParent.appendChild(currentPopup);
-
-}
 
 window.onload = function() {
 	console.log("loaded")
@@ -129,7 +85,6 @@ function updateDifferences(titleElements){
 					elementToAppend(titleElements[currentDomOffset + i]).appendChild(buttonElem);
 					elementToAppend(titleElements[currentDomOffset + i]).appendChild(percent);
 	
-					buttonElem.addEventListener("click", displayPopup);
 					buttonElem.setAttribute("result", "N/A");
 					buttonElem.setAttribute("id", "buttonElem" + i);
 					buttonElem.setAttribute("data-tippy-content", "Tooltips");
@@ -142,7 +97,14 @@ function updateDifferences(titleElements){
 	
 					buttonElem.setAttribute("style", "border:None; border-radius:100%; height:2vh; width:2vh; background-color:"+color+";display:inline-block;");
 					
+					// initializae Tippy
+					tippy('#buttonElem' + i, {
+						content: '<h1> HELLO WORLD </h1>',
+						trigger: 'focus'
+					});
+
 				}
+
 				readyToLoad = true;
 			},
 			error: function(){
