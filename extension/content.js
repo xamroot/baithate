@@ -13,10 +13,18 @@ let baitImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJoAAAEqCAMAAADan
 window.onload = function() {
 	console.log("loaded")
 	scrapePage();
-	setInterval(scrapePage, 1000);
+	setInterval(checkEnabledScrape, 1000);
 }();
 
-
+function checkEnabledScrape(){
+	chrome.storage.sync.get({
+		enabled: true,
+	  }, function(items) {
+		if(items.enabled){
+			scrapePage();
+		}
+	  });
+}
 
 function scrapePage(){
 
@@ -81,6 +89,10 @@ function scrapePage(){
 	} else if(location == "https://www.buzzfeed.com/"){
 		titleElements = $(".js-card__link.link-gray");
 		elementToAppend = BuzzfeedHome;
+	} else if (location.includes("news.ycombinator.com")){
+		titleElements = $(".storylink");
+		elementToAppend = HackerNews;
+		displayCss = "margin-left:10px;";
 	}
 
 	for (let i=0; i<titleElements.length; ++i) {
@@ -188,11 +200,15 @@ function GoogleSearch(titleElement){
 }
 
 function GoogleNews(titleElement){
-	return titleElement.parentElement.parentElement.parentElement;
+	return titleElement.parentElement.parentElement.parentElement.parentElement;
 }
 
 function BuzzfeedHome(titleElement){
 	return titleElement.parentElement.parentElement.parentElement;
+}
+
+function HackerNews(titleElement){
+	return titleElement.parentElement;
 }
 
 function killAll(){

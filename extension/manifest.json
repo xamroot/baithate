@@ -16,7 +16,8 @@
 			"matches": [
 				"*://www.youtube.com/*",
 				"*://www.google.com/search*",
-				"*://www.buzzfeed.com/*"
+				"*://www.buzzfeed.com/*",
+				"*://news.ycombinator.com/*"
 			],
 			"js": ["popper.js", "tippy.js", "jquery.min.js", "content.js"]
 		}
@@ -24,6 +25,7 @@
 		"web_accessible_resources": ["*.svg","*.SVG"],
     "permissions": [
         "notifications",
-        "activeTab"
+		"activeTab",
+		"storage"
     ]
 }
