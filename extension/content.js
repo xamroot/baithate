@@ -13,10 +13,18 @@ let baitImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJoAAAEqCAMAAADan
 window.onload = function() {
 	console.log("loaded")
 	scrapePage();
-	setInterval(scrapePage, 1000);
+	setInterval(checkEnabledScrape, 1000);
 }();
 
-
+function checkEnabledScrape(){
+	chrome.storage.sync.get({
+		enabled: true,
+	  }, function(items) {
+		if(items.enabled){
+			scrapePage();
+		}
+	  });
+}
 
 function scrapePage(){
 

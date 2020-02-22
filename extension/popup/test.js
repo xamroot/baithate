@@ -5,8 +5,8 @@ function toggleSettings(){
       chrome.storage.sync.set({
       enabled: !items.enabled
       }, function(){
-        items.enabled ? document.getElementById("isEnabled").innerText = "Disable BaitHate" : document.getElementById("isEnabled").innerText = "Enable BaitHate"
-      }
+        !items.enabled ? document.getElementById("isEnabled").innerText = "Disable BaitHate" : document.getElementById("isEnabled").innerText = "Enable BaitHate";
+      });
     });
     
     
