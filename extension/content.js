@@ -38,17 +38,13 @@ let displayPopup = (event) => {
 	popupMessage.setAttribute("style", "position:relative; z-index:10000;")
 	currentPopup.appendChild(popupMessage);
 	// set up thumbs up
-	let popupThumbsup = document.createElement("INPUT");
-	popupThumbsup.setAttribute("type", "image");
-	// will need to be changed for firefox swag swag
-	popupThumbsup.setAttribute("src", "chrome-extension://cldjpklnlodcnoaiealhmhmonfpemkgi/thumbsup.svg");
+	let popupThumbsup = document.createElement("a");
+	popupThumbsup.innerText = "👍";
 	popupThumbsup.setAttribute("style", "position:relative; z-index:10000; height:25px; width: 25px");
 	currentPopup.appendChild(popupThumbsup);
 	// set up thumbs down
-	let popupThumbsdown = document.createElement("INPUT");
-	popupThumbsdown.setAttribute("type", "image");
-	// will need to be changed for firefox swag swag
-	popupThumbsdown.setAttribute("src", "chrome-extension://cldjpklnlodcnoaiealhmhmonfpemkgi/thumbsup.svg");
+	let popupThumbsdown = document.createElement("a");
+	popupThumbsdown.innerText = "�")
 	popupThumbsdown.setAttribute("style", "position:relative; z-index:10000; height:25px; width: 25px");
 	currentPopup.appendChild(popupThumbsdown);
 	// add current popup to the parent (what you are clicking on)
@@ -57,9 +53,13 @@ let displayPopup = (event) => {
 
 }
 
+// function that runs after async http request gets a response
 let xhttpCallback = () => {
+	// runs when the response is done
     if (xhttp.readyState == 4) {
-        let x = JSON.parse(xhttp.responseText);
+		// turn response from string into jso
+		let x = JSON.parse(xhttp.responseText);
+		// loop through all response json text
         for (let i=0; i<x.length; ++i) {
         	let buttonElem = document.getElementById("buttonElem" + i);
         	buttonElem.setAttribute("result", parseInt(x[i] * 100));
@@ -75,11 +75,12 @@ window.onload = function() {
         titles.push(titleElements[i].innerHTML);
 
         var buttonElem = document.createElement("BUTTON");
-		titleElements[i].parentElement.parentElement.parentElement.parentElement.appendChild(buttonElem);
-        buttonElem.innerHTML = "clickme";
+		titleElements[i].parentElement.parentElement.appendChild(buttonElem);
+		buttonElem.innerHTML = "clickme";
         buttonElem.addEventListener("click", displayPopup);
         buttonElem.setAttribute("result", "N/A");
-        buttonElem.setAttribute("id", "buttonElem" + i);
+		buttonElem.setAttribute("id", "buttonElem" + i);
+		buttonElem.setAttribute("style", "border:1px,1px,1px");
 		buttons.push(buttonElem);
 	}
 	xhttp.onreadystatechange = xhttpCallback;
