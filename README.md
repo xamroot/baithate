@@ -8,7 +8,7 @@ Clickbait is a manipulative practice the litters the web and pollutes your brows
 We developed BaitHate to help identify clickbait at a glance and get back to cleaner browsing.
 
 ### Tech Specs
---TODO
+We decided to use our differences as our strengths using a variety of platforms and languages. C#, SQL, Python, and JavaScript were the primary languages for our solution. C# provided us with a powerful statically typed back end. It was used for our machine learning and api. We used JavaScript for the chrome extension to embed our results right in the users browser. Finally we used a python modual to generate short descriptions for some of the Clickbait articles. We used a plethora of services from Azure serverless functions to Google Cloud Platforms powerful app services. All of our data is securly stored in a sql database kindly offered for free by gearhost. You can see a picture of our full cloud solution below.
 
 ## Installation Instructions
 
