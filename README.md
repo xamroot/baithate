@@ -21,7 +21,7 @@ We developed BaitHate to help identify clickbait at a glance and get back to cle
 #### Chrome Web Store
 BaitHate has been published on the Chrome Web Store and is available here ##TODO. 
 
-### Usage
+## Usage
 
 Once installed, BaitHate will automatically display an estimated likelihood that a title link on a supported site is clickbait, as well as a helpful color indicator. 
 
