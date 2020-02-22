@@ -118,7 +118,7 @@
             $.ajax({
                 type: "POST",
                 url: "https://baithateapi.azurewebsites.net/api/BaitHate/InsertFeedbackToTraining?title=" + title + "&isGood=" + isGood,
-                success: function () { alert("Training data successfully added"); location.reload(); },
+                success: function () { location.reload(); },
                 error: function () { alert("There was an error") }
             });
         }
