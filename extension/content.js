@@ -153,12 +153,12 @@ function updateDifferences(titleElements){
 					tippy('#containerElemBox' + i, {
 						content: val + `% chance of clickbait <br/> 
 								<div style='text-align:center;'> 
-									<span style='text-align:center;display:inline-block;color:green;cursor:pointer;' onclick='vote("${newItems[i]}", true)'>
+									<span style='text-align:center;display:inline-block;color:green;cursor:pointer;' onclick='vote("${newItems[i].replace(/(\r\n|\n|\r)/gm, "")}", true)'>
 										<img width=35 height=35 src='${pointerImage}'/> <br/>
 										Not Clickbait
 									</span>
 									<span style='display:inline-block;padding:3px;'>&nbsp;</span>
-									<span style='text-align:center;display:inline-block;color:red;cursor:pointer;' onclick='vote("${newItems[i]}", false)'>
+									<span style='text-align:center;display:inline-block;color:red;cursor:pointer;' onclick='vote("${newItems[i].replace(/(\r\n|\n|\r)/gm, "")}", false)'>
 										<img width=20 height=35 src='${baitImage}'/> <br/> 
 										Clickbait
 									</span>
