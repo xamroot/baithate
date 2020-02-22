@@ -39,11 +39,13 @@ function scrapePage(){
 		var thumbsAction = document.createElement("script");
 
 		thumbsAction.innerHTML = `
-			function vote(title, isGood) {
+			function vote(title, isGood, index) {
 				$.ajax({
 					type: "POST",
 					url: "https://baithateapi.azurewebsites.net/api/BaitHate/AddUserFeedback?title=" + title + "&isGood=" + isGood,
-					success: function() {alert("Feedback recorded.");},
+					success: function() {
+						$('#innerContentElem' + index).html('<label style="line-height:50px">Thanks for your feedback!</label>');
+					},
 					error: function() {alert("Error");}
 				})
 			} 
@@ -152,13 +154,13 @@ function updateDifferences(titleElements){
 					// initializae Tippy
 					tippy('#containerElemBox' + i, {
 						content: val + `% chance of clickbait <br/> 
-								<div style='text-align:center;'> 
-									<span style='text-align:center;display:inline-block;color:green;cursor:pointer;' onclick='vote("${newItems[i]}", true)'>
+								<div style='text-align:center;' id='innerContentElem${i}'> 
+									<span style='text-align:center;display:inline-block;color:green;cursor:pointer;' onclick='vote("${newItems[i].replace(/(\r\n|\n|\r)/gm, "").trim().replace("\"", "").replace("'", "")}", true, ${i})'>
 										<img width=35 height=35 src='${pointerImage}'/> <br/>
 										Not Clickbait
 									</span>
 									<span style='display:inline-block;padding:3px;'>&nbsp;</span>
-									<span style='text-align:center;display:inline-block;color:red;cursor:pointer;' onclick='vote("${newItems[i]}", false)'>
+									<span style='text-align:center;display:inline-block;color:red;cursor:pointer;' onclick='vote("${newItems[i].replace(/(\r\n|\n|\r)/gm, "").trim().replace("\"", "").replace("'", "")}", false, ${i})'>
 										<img width=20 height=35 src='${baitImage}'/> <br/> 
 										Clickbait
 									</span>
