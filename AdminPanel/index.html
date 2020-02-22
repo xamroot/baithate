@@ -14,6 +14,16 @@
 </head>
 
 <body>
+    <script>
+        function insert(title, isGood) {
+            $.ajax({
+                type: "POST",
+                url: "https://baithateapi.azurewebsites.net/api/BaitHate/InsertFeedbackToTraining?title=" + title + "&isGood=" + isGood,
+                success: function() {alert("Training data successfully added"); location.reload();},
+                error: function() {alert("There was an error")}
+            });
+        }
+    </script>
     <main role="main">
         <div class="container-fluid">
             <div class="row">
@@ -53,8 +63,8 @@
                                                 row = result[i];
                                                 htmlStr += "<td>" + row[keys[j]] +"</td>"
                                             }
-                                            htmlStr += "<td><button type=\"button\" class=\"btn btn-success\">✔</button></td>"
-                                            htmlStr += "<td><button type=\"button\" class=\"btn btn-danger\">✖</button></td>"
+                                            htmlStr += "<td><button onclick=\"insert('" + result[i]['title'] +"', true)\" type=\"button\" class=\"btn btn-success\">✔</button></td>"
+                                            htmlStr += "<td><button onclick=\"insert('" + result[i]['title'] +"', false)\" type=\"button\" class=\"btn btn-danger\">✖</button></td>"
                                             htmlStr += "</tr>"
                                             
                                         }
