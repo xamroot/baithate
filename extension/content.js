@@ -81,6 +81,10 @@ function scrapePage(){
 	} else if(location == "https://www.buzzfeed.com/"){
 		titleElements = $(".js-card__link.link-gray");
 		elementToAppend = BuzzfeedHome;
+	} else if (location.includes("news.ycombinator.com")){
+		titleElements = $(".storylink");
+		elementToAppend = HackerNews;
+		displayCss = "margin-left:10px;";
 	}
 
 	for (let i=0; i<titleElements.length; ++i) {
@@ -193,6 +197,10 @@ function GoogleNews(titleElement){
 
 function BuzzfeedHome(titleElement){
 	return titleElement.parentElement.parentElement.parentElement;
+}
+
+function HackerNews(titleElement){
+	return titleElement.parentElement;
 }
 
 function killAll(){
