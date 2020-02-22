@@ -2,6 +2,11 @@
 	"manifest_version": 2,
 	"name": "BaitHate",
 	"version": "0.1",
+	"web_accessible_resources": ["*.svg","*.SVG"],
+    "permissions": [
+        "notifications",
+        "activeTab"
+    ],
 	"content_scripts": [
 		{
 			"matches": [
