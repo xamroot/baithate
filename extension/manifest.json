@@ -16,7 +16,7 @@
 			"matches": [
 				"*://www.youtube.com/*"
 			],
-			"js": ["content.js"]
+			"js": ["jquery.min.js", "content.js"]
 		}
 	],
 		"web_accessible_resources": ["*.svg","*.SVG"],

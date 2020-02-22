@@ -17,18 +17,11 @@ let displayPopup = (event) => {
 	currentPopup = document.createElement("DIV");
 	color = "blue";
 	result = event.target.getAttribute("result")
-	if (result != "N/A") {
-		value = parseInt(result);
-		if (value > 75)
-			color = "red";
-		else if (value > 50)
-			color = "orange";
-		else if (value > 25)
-			color = "yellow";
-		else if (value >= 0)
-			color = "green";
-	}
-	currentPopup.setAttribute("style", "background-color:" + color + "; height:10vh; width:25vw; position:absolute; z-index:5000; right:10%; top: 25%;");
+	
+	value = parseInt(result);
+	color = getColorGradient(value / 100);
+
+	currentPopup.setAttribute("style", "background-color:" + color + "; height:10vh; width:25vw; position:absolute; z-index:5000; right:10%; top: 25%; border: 1px solid black; border-radius: 3px;");
 	// set up pop message
 	let popupMessage = document.createElement("H3");
 	popupMessage.innerHTML = event.target.getAttribute("result");
@@ -44,7 +37,7 @@ let displayPopup = (event) => {
 	currentPopup.appendChild(popupThumbsup);
 	// set up thumbs down
 	let popupThumbsdown = document.createElement("a");
-	popupThumbsdown.innerText = "�")
+	popupThumbsdown.innerText = "👎";
 	popupThumbsdown.setAttribute("style", "position:relative; z-index:10000; height:25px; width: 25px");
 	currentPopup.appendChild(popupThumbsdown);
 	// add current popup to the parent (what you are clicking on)
@@ -53,39 +46,78 @@ let displayPopup = (event) => {
 
 }
 
-// function that runs after async http request gets a response
-let xhttpCallback = () => {
-	// runs when the response is done
-    if (xhttp.readyState == 4) {
-		// turn response from string into jso
-		let x = JSON.parse(xhttp.responseText);
-		// loop through all response json text
-        for (let i=0; i<x.length; ++i) {
-        	let buttonElem = document.getElementById("buttonElem" + i);
-        	buttonElem.setAttribute("result", parseInt(x[i] * 100));
-        }
-
-    }
-}
 
 window.onload = function() {
-	let titleElements = document.querySelectorAll("#video-title");
+	var location = window.location.toString()
+	let titleElements = []
+	let elementToAppend;
+	
+	if (location.includes("youtube.com")) {
+		// init titleElements
+		let titleElements = document.querySelectorAll("#video-title");
+		
+		// search results page
+		if (location.includes("/results?")) {
+			elementToAppend = YoutubeSearchpage;
+		// video player page
+		} else if (location.includes("/watch?v=")) {
+			elementToAppend = YoutubeWatchpage;
+		// home page
+		} else {
+			elementToAppend = YoutubeHomepage;
+		}
+	} 
 
 	for (let i=0; i<titleElements.length; ++i) {
-        titles.push(titleElements[i].innerHTML);
-
-        var buttonElem = document.createElement("BUTTON");
-		titleElements[i].parentElement.parentElement.appendChild(buttonElem);
-		buttonElem.innerHTML = "clickme";
-        buttonElem.addEventListener("click", displayPopup);
-        buttonElem.setAttribute("result", "N/A");
-		buttonElem.setAttribute("id", "buttonElem" + i);
-		buttonElem.setAttribute("style", "border:1px,1px,1px");
-		buttons.push(buttonElem);
+		titles.push(titleElements[i].innerText);
 	}
-	xhttp.onreadystatechange = xhttpCallback;
-	xhttp.open("POST", "https://baithateapi.azurewebsites.net/api/BaitHate/GetPrediction", true);
-	xhttp.setRequestHeader("Content-type", "application/json");
-	console.log(JSON.stringify(titles));
-	xhttp.send(JSON.stringify(titles));	
+
+	$.ajax({
+		type: "POST",
+		url: "https://baithateapi.azurewebsites.net/api/BaitHate/GetPrediction",
+		data: JSON.stringify(titles),
+		contentType: "application/json",
+		success: function(data){
+			let x = data;
+			// loop through all response json text
+			for (let i=0; i<x.length; ++i) {
+				var buttonElem = document.createElement("BUTTON");
+				var percent = document.createElement("span");
+				
+				elementToAppend(titleElements[i]).appendChild(buttonElem);
+				elementToAppend(titleElements[i]).appendChild(percent);
+
+				buttonElem.addEventListener("click", displayPopup);
+				buttonElem.setAttribute("result", "N/A");
+				buttonElem.setAttribute("id", "buttonElem" + i);
+				buttonElem.setAttribute("style", "border:1px,1px,1px");
+				let val = parseInt(x[i] * 100)
+				percent.innerText = "  " + val + "%";
+				let color = "blue"
+				buttonElem.setAttribute("result", val)
+				console.log(val)
+				color = getColorGradient(x[i]);
+
+				buttonElem.setAttribute("style", "border:None; border-radius:100%; height:2vh; width:2vh; background-color:"+color+";");
+			}
+		}
+	});
 }();
+
+let getColorGradient = (value) => {
+    var hue=((1-value)*120).toString(10);
+    return ["hsl(",hue,",100%,50%)"].join("");
+}
+
+
+let YoutubeHomepage = (titleElement) => {
+	return titleElement.parentElement.parentElement;
+}
+
+let YoutubeSearchpage = (titleElement) => {
+	return titleElement.parentElement.parentElement;
+}
+
+let YoutubeWatchPage = (titleElement) => {
+	return titleElement.parentElement.parentElement;
+}
