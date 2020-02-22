@@ -7,7 +7,8 @@ try {
             titles.push(titleElements[i].innerHTML);
             var buttonElem = document.createElement("BUTTON");
 			titleElements[i].parentElement.parentElement.parentElement.parentElement.appendChild(buttonElem);
-			buttonElem.innerHTML = "clickme";
+            buttonElem.innerHTML = "clickme";
+            buttonElem.addEventListener("click", function() {alert("FUCKKK")});
 		}
 
 		console.log(titles);
