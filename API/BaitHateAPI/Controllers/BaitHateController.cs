@@ -24,6 +24,8 @@ namespace BaitHateAPI.Controllers
         [HttpGet("GetPrediction")]
         public List<float> GetPrediction(List<string> titles)
         {
+            byte[] model = _context.Models.ToList()[0].Model;
+
             throw new NotImplementedException();
         }
 
