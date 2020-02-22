@@ -10,4 +10,4 @@ Matthew Shen / email
 
 
 Justin Keller / keller.justind@gmail.com
-* Add contributions
+* Documentation, Front End Assist
