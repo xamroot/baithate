@@ -76,5 +76,11 @@ namespace BaitHateAPI.Controllers
         {
             throw new NotImplementedException();
         }
+
+        [HttpGet("Test")]
+        public String Test(string test)
+        {
+            return test;
+        }
     }
 }
