@@ -1,4 +1,11 @@
-# BaitHait - Clickbait Identification
+# BaitHate - Clickbait Identification
+"You won't BELIEVE how great this extension is."
+
+Let's be honest - we've all been there. You see that headline that you know you shouldn't click, but you just can't resist. You fell for clickbait.
+
+Clickbait is a manipulative practice the litters the web and pollutes your browser with noise. 
+
+We developed BaitHate to help identify clickbait at a glance and steer clear of it.
 
 ## Installation Instructions
 
