@@ -7,6 +7,9 @@ Clickbait is a manipulative practice the litters the web and pollutes your brows
 
 We developed BaitHate to help identify clickbait at a glance and get back to cleaner browsing.
 
+### Tech Specs
+
+
 ## Installation Instructions
 
 ### Google Chrome
