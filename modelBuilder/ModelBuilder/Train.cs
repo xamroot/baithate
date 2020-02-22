@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
@@ -25,9 +26,10 @@ namespace ModelBuilder
                     SqlClientFactory.Instance
                 );
 
+            var trainingDataList = db.Fetch<TrainData>("SELECT title as Title, isClickbait as Label FROM [trainingData]");
 
             MLContext context = new MLContext();
-            var trainingData = context.Data.LoadFromTextFile<TrainData>("data.txt", separatorChar: '`');
+            var trainingData = context.Data.LoadFromEnumerable<TrainData>(trainingDataList);
             var settings = new BinaryExperimentSettings();
             settings.MaxExperimentTimeInSeconds = 20;
             var mlExperiment = context.Auto().CreateBinaryClassificationExperiment(settings);
