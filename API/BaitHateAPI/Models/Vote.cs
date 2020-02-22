@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BaitHateAPI.Models
 {
     public partial class Vote
     {
-        public Vote() : base() {
+        public Vote() : base()
+        {
 
         }
-        public Vote(string title, bool isGood) {
+        public Vote(string title, bool isGood)
+        {
             Title = title;
             Good = isGood ? 1 : 0;
             Bad = isGood ? 0 : 1;
-            
+
         }
 
         public void AddVote(bool isGood)
@@ -23,7 +24,6 @@ namespace BaitHateAPI.Models
             else
                 Bad++;
         }
-        
         public int Id { get; set; }
         public string Title { get; set; }
         public int Good { get; set; }

@@ -2,11 +2,15 @@
 	"manifest_version": 2,
 	"name": "BaitHate",
 	"version": "0.1",
-	"web_accessible_resources": ["*.svg","*.SVG"],
-    "permissions": [
-        "notifications",
-        "activeTab"
-    ],
+	 "icons": {
+	 	"48": "popup/thisisbait.png"
+	   },
+
+	  "browser_action": {
+		"default_icon": "popup/thisisbait.png",
+		"default_title": "BaitHate",
+		"default_popup": "popup/options.html"
+	  },
 	"content_scripts": [
 		{
 			"matches": [
@@ -14,5 +18,10 @@
 			],
 			"js": ["content.js"]
 		}
-	]
+	],
+		"web_accessible_resources": ["*.svg","*.SVG"],
+    "permissions": [
+        "notifications",
+        "activeTab"
+    ]
 }

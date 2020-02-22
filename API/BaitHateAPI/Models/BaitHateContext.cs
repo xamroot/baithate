@@ -19,6 +19,7 @@ namespace BaitHateAPI.Models
         public virtual DbSet<TrainingData> TrainingData { get; set; }
         public virtual DbSet<Vote> Votes { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Models>(entity =>
@@ -44,30 +45,22 @@ namespace BaitHateAPI.Models
                     .IsRequired()
                     .HasColumnName("title")
                     .IsUnicode(false);
-
-                //entity.HasKey("id");
             });
 
             modelBuilder.Entity<Vote>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("votes");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Bad).HasColumnName("bad");
 
                 entity.Property(e => e.Good).HasColumnName("good");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
-
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasColumnName("title")
                     .IsUnicode(false);
-
-                entity.HasKey("id");
             });
 
             OnModelCreatingPartial(modelBuilder);

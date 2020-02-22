@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,8 @@ using BaitHateAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.ML;
+using BaitHateAPI.Models.ML;
 
 namespace BaitHateAPI.Controllers
 {
@@ -21,10 +24,29 @@ namespace BaitHateAPI.Controllers
             _context = context;
         }
         
-        [HttpGet("GetPrediction")]
-        public List<float> GetPrediction(List<string> titles)
+        [HttpPost("GetPrediction")]
+        public ActionResult<List<float>> GetPrediction([FromBody] List<string> titles)
         {
-            throw new NotImplementedException();
+            //Save the model as zip
+            byte[] model = _context.Models.ToList()[0].Model;
+            System.IO.File.WriteAllBytes("model.zip", model);
+            
+            //Load the Trained Model
+            MLContext mlContext = new MLContext();
+            DataViewSchema modelSchema;
+            ITransformer trainedModel = mlContext.Model.Load("model.zip", out modelSchema);
+
+            PredictionEngine<TitleInput, TitleOutput> predictionEngine = mlContext.Model.CreatePredictionEngine<TitleInput, TitleOutput>(trainedModel);
+
+            //Prepare input data
+            List<float> result = new List<float>();
+            titles.ForEach(title =>
+            {
+                var temp = new TitleInput { Title = title };
+                result.Add(predictionEngine.Predict(temp).Probabilities);
+            });
+
+            return result;
         }
 
         [HttpPost("AddUserFeedback")]
@@ -53,6 +75,12 @@ namespace BaitHateAPI.Controllers
         public String GetDescription(string title)
         {
             throw new NotImplementedException();
+        }
+
+        [HttpGet("Test")]
+        public String Test(string test)
+        {
+            return test;
         }
     }
 }
