@@ -19,6 +19,8 @@ namespace BaitHateAPI.Controllers
 
         private readonly BaitHateContext _context;
 
+        private static DateTime? modelLastDownload;
+
         public BaitHateController(BaitHateContext context)
         {
             _context = context;
@@ -27,9 +29,13 @@ namespace BaitHateAPI.Controllers
         [HttpPost("GetPrediction")]
         public ActionResult<List<float>> GetPrediction([FromBody] List<string> titles)
         {
-            //Save the model as zip
-            byte[] model = _context.Models.ToList()[0].Model;
-            System.IO.File.WriteAllBytes("model.zip", model);
+            if ((modelLastDownload == null || DateTime.Now > modelLastDownload.Value.AddHours(5)))
+            {
+                //Save the model as zip
+                byte[] model = _context.Models.ToList()[0].Model;
+                System.IO.File.WriteAllBytes("model.zip", model);
+                modelLastDownload = DateTime.Now;
+            }
             
             //Load the Trained Model
             MLContext mlContext = new MLContext();
