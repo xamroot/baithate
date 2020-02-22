@@ -61,16 +61,27 @@ namespace BaitHateAPI.Controllers
             return _context.Votes.ToList();
         }
 
-        [HttpPost("InsertTraining")]
-        public ActionResult InsertTraining([FromBody] TrainingData data)
+        [HttpPost("InsertFeedbackToTraining")]
+        public ActionResult InsertFeedbackToTraining(string title, bool isGood)
         {
-            if(_context.TrainingData.Where(d => data.Title == d.Title).ToList().Count > 0)
+            var result = _context.Votes.Where(v => v.Title == title).ToList();
+            if (result.Count == 0)
             {
-                _context.Entry(data).State = EntityState.Modified;
+                return NotFound("Feedback not found...");
+            }
+
+            _context.Votes.Remove(result[0]);
+            _context.SaveChanges();
+
+            var trained = _context.TrainingData.Where(d => title == d.Title).ToList();
+            if (trained.Count > 0)
+            {
+                trained[0].IsClickbait = !isGood;
+                _context.Entry(trained[0]).State = EntityState.Modified;
                 _context.SaveChanges();
                 return Ok();
             }
-            _context.TrainingData.Add(data);
+            _context.TrainingData.Add(new TrainingData {Title = title, IsClickbait = !isGood});
             _context.SaveChanges();
             return Ok();
         }

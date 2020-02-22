@@ -1,0 +1,76 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>BaitHate Data Selection</title>
+    <meta name="description" content="">
+
+    <script src="Content/jquery.min.js"></script>
+    <script src="Content/popper.js"></script>
+
+    <link rel="stylesheet" href="Content/bootstrap.min.css">
+    <script src="Content/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <main role="main">
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow w-100">
+                    <a class="navbar-brand col-sm col-md mr-0" href="#">BaitHate Data Selection</a>
+                </nav>
+            </div>
+            
+            <div class="row  center">
+                <h3>Voting Data</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Not Clickbait (Good)</th>
+                                <th>Clickbait (Bad)</th>
+                                <th>Add as Not Clickbait</th>
+                                <th>Add as Clickbait</th>
+                            </tr>
+                        </thead>
+                        <tbody id='voteTable'>
+                            <script>
+                                let result;
+                                $.ajax({
+                                    url: "https://baithateapi.azurewebsites.net/api/BaitHate/GetAllFeedback",
+                                    method: "GET",
+                                    success: function(data) {
+                                        let keys = ['id', 'title', 'good', 'bad'];
+                                        result = data;
+                                        console.log(result);
+                                        let htmlStr = ""
+                                        for(i = 0; i < result.length; i++) {
+                                            htmlStr += "<tr>"
+                                            for(j = 0; j < keys.length; j++) {
+                                                row = result[i];
+                                                htmlStr += "<td>" + row[keys[j]] +"</td>"
+                                            }
+                                            htmlStr += "<td><button type=\"button\" class=\"btn btn-success\">✔</button></td>"
+                                            htmlStr += "<td><button type=\"button\" class=\"btn btn-danger\">✖</button></td>"
+                                            htmlStr += "</tr>"
+                                            
+                                        }
+                                        document.getElementById("voteTable").innerHTML = htmlStr;
+                                    }
+                                    //accept: 'text/plain'
+                                })
+                                
+                            </script>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>
