@@ -31,16 +31,28 @@ namespace ModelBuilder
             MLContext context = new MLContext();
             var trainingData = context.Data.LoadFromEnumerable<TrainData>(trainingDataList);
             var settings = new BinaryExperimentSettings();
-            settings.MaxExperimentTimeInSeconds = 20;
+            settings.MaxExperimentTimeInSeconds = 60;
             var mlExperiment = context.Auto().CreateBinaryClassificationExperiment(settings);
             var results = mlExperiment.Execute(trainingData);
 
             log.LogInformation($"Train complete: {results.BestRun.ValidationMetrics.Accuracy}%");
-            using(MemoryStream ms = new MemoryStream())
+            log.LogInformation($"Train complete: {results.BestRun.TrainerName}");
+
+            try
             {
-                context.Model.Save(results.BestRun.Model, trainingData.Schema, ms);
-                var model = new models() { model = ms.ToArray() };
-                db.Save(model);
+                db.BeginTransaction();
+                db.Execute("DELETE FROM models");
+                using(MemoryStream ms = new MemoryStream())
+                {
+                    context.Model.Save(results.BestRun.Model, trainingData.Schema, ms);
+                    var model = new models() { model = ms.ToArray() };
+                    db.Save(model);
+                }
+                db.CompleteTransaction();
+            }
+            catch
+            {
+                db.AbortTransaction();
             }
         }
     }
