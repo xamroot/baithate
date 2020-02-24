@@ -24,7 +24,7 @@ We decided to use our differences as our strengths using a variety of platforms 
 5. Drag the 'baithate-master' folder anywhere on the page to import it (do not delete the folder afterwards).
 
 #### Chrome Web Store
-Coming soon. BaitHait is currently under review to be published to the Chrome Web App Store. 
+[Get BaitHate From the Chrome Web Store](https://chrome.google.com/webstore/detail/baithate/doalljdmbfpigicfalabpljamcdcadlg)
 
 ## Usage
 
